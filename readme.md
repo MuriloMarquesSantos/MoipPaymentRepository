@@ -54,6 +54,7 @@ These are the main components you will need in order to run the application prop
 * In order to be able to use the API properly, you need to follow the data structure of each entity as per below:
 
 ***Payment***
+
 column | type
 --- | ---
 id | integer *primary key*
@@ -108,6 +109,22 @@ column | type
 id | integer *primary key*
 name | String
 ---
+
+### Operations
+
+* The main operations are:
+
+	1. Registering a new Buyer: POST (http://localhost:9000/buyer) Please, notice that for insertion purposes, the id is not required, for it is
+	auto-incremented in database.
+	
+```json
+{
+    "email": "murilo@email.com",
+    "cpf": "123123123123",
+    "nome": "buyer"
+}
+```
+* The full list of operations and details of each one, are available at 'PostmanDocument' folder.
 
 ### Contributors
 
