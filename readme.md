@@ -127,9 +127,9 @@ name | String
 }
 ```
 
-	2. Registering a new Client POST '(http://localhost:9000/client)'
+	2. Registering a new Client 'POST (http://localhost:9000/client)'
 	
-	```json
+```json
 {
     "name": "amazon"
 }
@@ -137,6 +137,7 @@ name | String
 
 	3. Creating a new Payment with CREDIT_CARD option. 'POST (http://localhost:9000/payment)'
 	
+```json	
 {
 	"amount": "10000.00",
 	"paymentMethod":{
@@ -160,9 +161,10 @@ name | String
 		"id": "1"
 	}
 }
+```
 
 	4. Creating a new Payment with BOLETO option: 'POST (http://localhost:9000/payment'
-	
+```json		
 {
 	"amount": "10000.00",
 	"paymentMethod":{
@@ -175,6 +177,7 @@ name | String
 		"id": "1"
 	}
 }
+```
 
 	5. Retrieving information of a payment by its id: 'GET (http://localhost:9000/payment/{id}'
 	
