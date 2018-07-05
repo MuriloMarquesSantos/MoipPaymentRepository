@@ -79,7 +79,7 @@ public class PaymentController {
 			}
 			
 			if(paymentProcurado == null) {
-				return new ResponseEntity("No Customer found for ID " + id, HttpStatus.NOT_FOUND);
+				return new ResponseEntity("No Payment found for ID " + id, HttpStatus.NOT_FOUND);
 			}
 			return new ResponseEntity(paymentProcurado, HttpStatus.OK);
 	}
