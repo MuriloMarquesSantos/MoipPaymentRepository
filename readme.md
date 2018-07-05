@@ -20,6 +20,12 @@ These are the main components you will need in order to run the application prop
 
 ---
 
+## Running the application locally
+
+There are several ways to run a Spring Boot application on your local machine. The easiest one is to run the 'main method' from  `com.moip.MoipPaymentApplication.java` class from your IDE.
+
+---
+
 ### Contributors
 
 - Murilo M. Santos <murilommms@gmail.com>
