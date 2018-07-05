@@ -45,13 +45,10 @@ public class PaymentController {
 	private PaymentRepository pr;
 	
 	@Autowired
-	private BuyerRepository br;
-	
-	@Autowired
-	private ClientRepository cr;
-	
-	@Autowired
 	private CreditCardController ccc;
+	
+	@Autowired
+	private BoletoController bc;
 	
 	/** Retorna uma lista com todos os Pagamentos do DB.
 	 * 
@@ -107,7 +104,11 @@ public class PaymentController {
 			payment.getPaymentMethod().setBoleto(this.criarBoleto());
 			payment.setStatus(PaymentStatus.CREATED);
 			try {
-			return pr.save(payment).getPaymentMethod().getBoleto().getCode();
+				stringBuilder.append("/ Pagamento cadastrado com sucesso!! //");
+				return this.stringBuilder + "\nCódigo do boleto: " +
+						pr.save(payment).getPaymentMethod().getBoleto().getCode() +
+						" \nData de Vencimento: " +
+						payment.getPaymentMethod().getBoleto().getExpirationDate();
 			}
 			catch(Exception e) {
 				return "Erro";
@@ -150,10 +151,8 @@ public class PaymentController {
 	 */
 		
 	public Boleto criarBoleto() {
-		Boleto boleto = new Boleto();
-		boleto.setCode("239398762934239398762934239398762934239398762934");
-		boleto.setExpirationDate("30-12-2018");
-		return boleto;
+		return bc.createBoleto("239398762934239398762934239398762934239398762934",
+								"30-12-2018");
 	}
 	
 	/** Consulta controlador de cartão de crédito para verificar se número é valido
