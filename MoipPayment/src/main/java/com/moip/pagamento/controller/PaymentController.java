@@ -12,12 +12,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import com.moip.pagamento.model.Boleto;
-import com.moip.pagamento.model.Buyer;
+import com.moip.pagamento.model.CreditCard;
 import com.moip.pagamento.model.Payment;
 import com.moip.pagamento.model.Payment.PaymentStatus;
 import com.moip.pagamento.repository.BuyerRepository;
@@ -49,6 +49,9 @@ public class PaymentController {
 	
 	@Autowired
 	private ClientRepository cr;
+	
+	@Autowired
+	private CreditCardController ccc;
 	
 	/** Retorna uma lista com todos os Pagamentos do DB.
 	 * 
@@ -111,9 +114,15 @@ public class PaymentController {
 			}
 		}
 		
-		//Se o pagamento for em cartão, os métodos de validação são realizados
+		/**
+		 * Verificar se: 1) Cartão já foi cadastrado Anteriormente 2)Amount é valido, 
+		 * 3) Número do Cartão é valido e 4) CVV é válido
+		 */
 		
-		else if(validarCartao(payment.getPaymentMethod().getCreditCard().getCardNumber(),payment.getPaymentMethod().getCreditCard().getCvv())) {
+		else if(!(creditCardExists(payment.getPaymentMethod().getCreditCard())) &&
+				validarAmount(payment.getAmount()) &&
+				validarCartao(payment.getPaymentMethod().getCreditCard().getCardNumber(),
+						      payment.getPaymentMethod().getCreditCard().getCvv())) {
 	
 				payment.setStatus(PaymentStatus.CREATED);
 				stringBuilder.append("/ Pagamento cadastrado com sucesso!! //");
@@ -147,32 +156,32 @@ public class PaymentController {
 		return boleto;
 	}
 	
-	/** Validação do número do cartão de crédito
+	/** Consulta controlador de cartão de crédito para verificar se número é valido
 	 * 
 	 * @param cartaoNumero
 	 * @return boolean - Resultado da validação (True or False)
 	 */
 	
 	public boolean validarNumeroCartao(String cartaoNumero) {
-		if(cartaoNumero.length()== 16 && cartaoNumero.matches("[0-9]*")) {
+		if(ccc.validarNumeroCartao(cartaoNumero)) {
 			return true;
 		} 
 		stringBuilder.append(" /Cartão inválido. Por favor, o código do Cartão deve possuir 16 carácteres numéricos (0-9) / ");
 		return false;
 	}
 	
-	/** Verificar se o DV possui apenas 3 dígitos e se é numérico
+	/** Consulta controlador de cartão de crédito para verificar se DV é válido
 	 * 
 	 * @param dv
 	 * @return boolean - Resultado da validação (True or False)
 	 */
 	
 	public boolean validarDV(String dv) {
-		if(dv.length()== 3 && dv.matches("[0-9]*")){
+		if(ccc.validarDV(dv)){
 			return true;
 			
 		}
-		stringBuilder.append(("/ Digito verificar inválido / "));
+		stringBuilder.append(("/ Digito verificador inválido / "));
 		return false;
 	}
 	
@@ -187,5 +196,38 @@ public class PaymentController {
 		return(validarNumeroCartao(cartaoNumero) && validarDV(dv));
 	}
 	
+	/** Verificar se o valor do pagamento é válido
+	 * 
+	 * @param amount
+	 * @return boolean - Resultado do teste (true or false)
+	 * @throws InvalidFormatException
+	 */
+	
+	public boolean validarAmount(double amount) throws InvalidFormatException{
+		if(amount < 1000000.00){
+			return true;
+			
+		}
+		stringBuilder.append(("/ Amount inválido, o valor máximo é R$1.000.000 / "));
+		return false;
+	}
+	
+	/** Verifica se o número de cartão já foi cadastrado anteriormente
+	 * 
+	 * @param creditCard
+	 * @return
+	 */
+	
+	public boolean creditCardExists(CreditCard creditCard) {
+		if(ccc.creditCardExists(creditCard)) {
+			stringBuilder.append(("Negado. Cartão já cadastrado anteriormente."));
+			return true;
+		}
+		return false;
+	}
+	
 
-}
+	}
+	
+
+

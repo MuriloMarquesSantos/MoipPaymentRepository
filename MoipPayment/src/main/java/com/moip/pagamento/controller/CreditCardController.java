@@ -1,5 +1,7 @@
 package com.moip.pagamento.controller;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,6 +47,8 @@ public class CreditCardController {
 	
 	@PostMapping()
 	public CreditCard cadastrarCreditCard(@RequestBody @Valid CreditCard creditCard) {
+		
+
 		return cr.save(creditCard);
 	}
 	
@@ -58,5 +62,48 @@ public class CreditCardController {
 	public CreditCard deletarCreditCard(@RequestBody CreditCard creditCard) {
 		cr.delete(creditCard);
 		return creditCard;
+	}
+	
+	/**Verificar se o cartão de crédito já existe no DB
+	 * 
+	 * @param creditCard
+	 * @return
+	 */
+	
+	public boolean creditCardExists(CreditCard creditCard) {
+		List<CreditCard> crl = cr.findAll();
+		
+		for (CreditCard card : crl) {
+			if(card.getCardNumber().equals(creditCard.getCardNumber())) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	/** Verifica se o número do cartão é válido
+	 * 
+	 * @param cartaoNumero
+	 * @return boolean - Resultado do teste (true or false)
+	 */
+	public boolean validarNumeroCartao(String cartaoNumero) {
+		if(cartaoNumero.length()== 16 && cartaoNumero.matches("[0-9]*")) {
+			return true;
+		} 
+		return false;
+	}
+	
+	/** Verifica se digito verificar é válido
+	 * 
+	 * @param dv
+	 * @return boolean - Resultado do teste (true or false)
+	 */
+	
+	public boolean validarDV(String dv) {
+		if(dv.length()== 3 && dv.matches("[0-9]*")){
+			return true;
+			
+		}
+		return false;
 	}
 }

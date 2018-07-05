@@ -48,7 +48,6 @@ public class BuyerController {
 	 */
 	@GetMapping("/buyer/{id}")
 	public ResponseEntity getBuyer(@PathVariable("id") Long id){
-		System.out.println("Entrei aqui");
 			List<Buyer> listaBuyer = br.findAll();
 			Buyer buyerProcurado = null;
 			
