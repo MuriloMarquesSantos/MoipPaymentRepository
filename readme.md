@@ -181,12 +181,13 @@ name | String
 
 #### 5: Retrieving information of a payment by its id: 'GET (http://localhost:9000/payment/{id}'
 	
-### 6: Retrieving information of a buyer by its id: 'GET (http://localhost:9000/buyer/{id}'
+#### 6: Retrieving information of a buyer by its id: 'GET (http://localhost:9000/buyer/{id}'
 	
 	
-* The full list of operations and details of each one, are available at 'PostmanDocument' folder.
+### The full list of operations and details of each one, are available at 'PostmanDocument' folder.
 
 ---
+
 ### Contributors
 
 - Murilo M. Santos <murilommms@gmail.com>
