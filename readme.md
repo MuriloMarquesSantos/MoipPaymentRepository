@@ -49,6 +49,8 @@ These are the main components you will need in order to run the application prop
 ---
 ## The API
 
+* The API's methods consume information via JSON data. You may use the most suitable software/framework for you to generate it.
+
 ### Data Structure
 
 * In order to be able to use the API properly, you need to follow the data structure of each entity as per below:
@@ -114,7 +116,7 @@ name | String
 
 * The main operations are:
 
-	1. Registering a new Buyer: POST (http://localhost:9000/buyer) Please, notice that for insertion purposes, the id is not required, for it is
+	1. Registering a new Buyer: 'POST (http://localhost:9000/buyer)' Please, notice that for insertion purposes, the id is not required, for it is
 	auto-incremented in database.
 	
 ```json
@@ -124,8 +126,64 @@ name | String
     "nome": "buyer"
 }
 ```
+
+	2. Registering a new Client POST '(http://localhost:9000/client)'
+	
+	```json
+{
+    "name": "amazon"
+}
+```
+
+	3. Creating a new Payment with CREDIT_CARD option. 'POST (http://localhost:9000/payment)'
+	
+{
+	"amount": "10000.00",
+	"paymentMethod":{
+		"method": "CREDIT_CARD",
+		"creditCard":{
+			"brand": "Master",
+			"holder":{
+				"name": "Bia",
+				"birthDate": "28-10-1994",
+				"documentNumber": "38129391293"
+			},
+			"cardNumber": "1111111111111215",
+			"expirationDate": "30-04-2018",
+			"cvv": "235"
+		}
+	},
+	"buyer":{
+		"id": "1"
+	},
+	"client":{
+		"id": "1"
+	}
+}
+
+	4. Creating a new Payment with BOLETO option: 'POST (http://localhost:9000/payment'
+	
+{
+	"amount": "10000.00",
+	"paymentMethod":{
+		"method": "BOLETO"
+	},
+	"buyer":{
+		"id": "1"
+	},
+	"client":{
+		"id": "1"
+	}
+}
+
+	5. Retrieving information of a payment by its id: 'GET (http://localhost:9000/payment/{id}'
+	
+	6. Retrieving information of a buyer by its id: 'GET (http://localhost:9000/buyer/{id}'
+	
+	
 * The full list of operations and details of each one, are available at 'PostmanDocument' folder.
 
+---
 ### Contributors
 
 - Murilo M. Santos <murilommms@gmail.com>
@@ -133,9 +191,6 @@ name | String
 ---
 
 
-* this is meant to be an examploe
-* markdown
-* Pretty cool
+## Support
 
-## Link Example
-[I'm an inline-style link](https://google.com)
+* If you have any query or doubt, please, feel free to contact me by e-mail.
