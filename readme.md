@@ -28,7 +28,9 @@ These are the main components you will need in order to run the application prop
 
 * After that you will be able to access the API through [http://localhost:9000](http://localhost:9000)
 
-### Architecture and Design
+---
+
+## Architecture and Design
 
 #### This application was built according to MVC, so you will find three packages at the main folder:
 	1.Model Package containing all the model structure and entity definition;
@@ -45,9 +47,9 @@ These are the main components you will need in order to run the application prop
 * All the database configuration can be found at the 'application.properties' file inside 'resources' folder.
 
 ---
-### The API
+## The API
 
-## Data Structure
+### Data Structure
 
 * In order to be able to use the API properly, you need to follow the data structure of each entity as per below:
 
