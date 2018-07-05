@@ -116,7 +116,7 @@ name | String
 
 * The main operations are:
 
-### 1: Registering a new Buyer: 'POST (http://localhost:9000/buyer)' Please, notice that for insertion purposes, the id is not required, for it is
+#### 1: Registering a new Buyer: 'POST (http://localhost:9000/buyer)' Please, notice that for insertion purposes, the id is not required, for it is
 	auto-incremented in database.
 	
 ```json
@@ -127,7 +127,7 @@ name | String
 }
 ```
 
-### 2: Registering a new Client: 'POST (http://localhost:9000/client)'
+#### 2: Registering a new Client: 'POST (http://localhost:9000/client)'
 	
 ```json
 {
@@ -135,7 +135,7 @@ name | String
 }
 ```
 
-### 3: Creating a new Payment with CREDIT_CARD option: 'POST (http://localhost:9000/payment)'
+#### 3: Creating a new Payment with CREDIT_CARD option: 'POST (http://localhost:9000/payment)'
 	
 ```json	
 {
@@ -163,7 +163,7 @@ name | String
 }
 ```
 
-### 4: Creating a new Payment with BOLETO option: 'POST (http://localhost:9000/payment'
+#### 4: Creating a new Payment with BOLETO option: 'POST (http://localhost:9000/payment'
 ```json		
 {
 	"amount": "10000.00",
@@ -179,7 +179,7 @@ name | String
 }
 ```
 
-### 5: Retrieving information of a payment by its id: 'GET (http://localhost:9000/payment/{id}'
+#### 5: Retrieving information of a payment by its id: 'GET (http://localhost:9000/payment/{id}'
 	
 ### 6: Retrieving information of a buyer by its id: 'GET (http://localhost:9000/buyer/{id}'
 	
