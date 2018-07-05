@@ -127,7 +127,7 @@ name | String
 }
 ```
 
-	2. Registering a new Client 'POST (http://localhost:9000/client)'
+	2. Registering a new Client: 'POST (http://localhost:9000/client)'
 	
 ```json
 {
@@ -135,7 +135,7 @@ name | String
 }
 ```
 
-	3. Creating a new Payment with CREDIT_CARD option. 'POST (http://localhost:9000/payment)'
+	3. Creating a new Payment with CREDIT_CARD option: 'POST (http://localhost:9000/payment)'
 	
 ```json	
 {
