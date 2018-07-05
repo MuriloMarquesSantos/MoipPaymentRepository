@@ -1,0 +1,159 @@
+{
+	"variables": [],
+	"info": {
+		"name": "MoipPaymentAPI",
+		"_postman_id": "2e15e562-f501-5356-0e42-bd50d8b2a360",
+		"description": "# Introduction\nThe API provides a service of creating and processing a payment between a customer and a client. It is possible to choose between payment methods: BOLETO and CREDIT_CARD. It is also possible to retrieve payments, check their status, and other data stored.\n\n# Overview\nThe API includes methods for GET, POST and DELETE verbs. It will consume information throught a JSON format at the request body and then send it to be processed afterwards.\n\n## List of main operations\n\n* GET http://localhost:9000/payment (Retrieves all payments)\n* GET http://localhost:9000/payment/{id} (Retrieves a single payment by its ID)\n* GET http://localhost:9000/buyer (Retrieves all Buyers)\n* GET http://localhost:9000/buyer/{id} (Retrieves a singles buyer by its ID)\n* POST http://localhost:9000/payment (Registers a new payment and all related informations, such as PaymentMethod, CreditCard and so on)\n* POST http://localhost:9000/client (registers a new client)\n* POST http://localhost:9000/buyer (registers a new buyer)\n\n# Error Codes\n*404 You should face this error if you type wrongly a path, such as: \"http://localhost:9090/buyerClient\"\n*Also there are some mandatory fields such as: The Credit Card Number. You might face this error if you forget to fill this field.\n",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "http://localhost:9000/buyer",
+			"request": {
+				"url": "http://localhost:9000/buyer",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"id\": \"1\",\n\t\"email\": \"murilo@email.com\",\n\t\"cpf\": \"123123123123\",\n\t\"nome\": \"buyer\"\n}"
+				},
+				"description": "Example of adding a new Buyer:\n\n{\n\t\"email\": \"murilo@email.com\",\n\t\"cpf\": \"123123123123\",\n\t\"nome\": \"buyer\"\n}\n\nIf you want to update an existing record, include the ID.\n\n{\n\t\"id\": \"1\",\n\t\"email\": \"murilo@email.com\",\n\t\"cpf\": \"123123123123\",\n\t\"nome\": \"buyer2\"\n}"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:9000/client",
+			"request": {
+				"url": "http://localhost:9000/client",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"id\": \"1\",\n\t\"name\": \"amazon2\"\n}"
+				},
+				"description": " To include a new Client:\n{\n\t\"name\": \"amazon\"\n}\n\n\nIf you wanted to update an existing client, include the Id:\n\n{\n\t\"id\": \"1\",\n\t\"name\": \"amazon2\"\n}"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:9000/payment CREDIT CARD",
+			"request": {
+				"url": "http://localhost:9000/payment",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"amount\": \"10000.00\",\n\t\"paymentMethod\":{\n\t\t\"method\": \"CREDIT_CARD\",\n\t\t\"creditCard\":{\n\t\t\t\"brand\": \"Master\",\n\t\t\t\"holder\":{\n\t\t\t\t\"name\": \"Bia\",\n\t\t\t\t\"birthDate\": \"28-10-1994\",\n\t\t\t\t\"documentNumber\": \"38129391293\"\n\t\t\t},\n\t\t\t\"cardNumber\": \"1111111111111215\",\n\t\t\t\"expirationDate\": \"30-04-2018\",\n\t\t\t\"cvv\": \"235\"\n\t\t}\n\t},\n\t\"buyer\":{\n\t\t\"id\": \"1\"\n\t},\n\t\"client\":{\n\t\t\"id\": \"1\"\n\t}\n}"
+				},
+				"description": "## Adding a new Payment with BOLETO option:\n\n{\n\t\"amount\": \"100000\",\n\t\"paymentMethod\":{\n\t\t\"method\": \"BOLETO\"\n\t},\n\t\"buyer\":{\n\t\t\"id\": \"1\"\n\t},\n\t\"client\":{\n\t\t\"id\": \"1\"\n\t}\n}\n\n## Adding a new Payment with Credit Card option:\n\n{\n\t\"amount\": \"10000.00\",\n\t\"paymentMethod\":{\n\t\t\"method\": \"CREDIT_CARD\",\n\t\t\"creditCard\":{\n\t\t\t\"brand\": \"Master\",\n\t\t\t\"holder\":{\n\t\t\t\t\"name\": \"Bia\",\n\t\t\t\t\"birthDate\": \"28-10-1994\",\n\t\t\t\t\"documentNumber\": \"38129391293\"\n\t\t\t},\n\t\t\t\"cardNumber\": \"1111111111111212\",\n\t\t\t\"expirationDate\": \"30-04-2018\",\n\t\t\t\"cvv\": \"23\"\n\t\t}\n\t},\n\t\"buyer\":{\n\t\t\"id\": \"1\"\n\t},\n\t\"client\":{\n\t\t\"id\": \"1\"\n\t}\n}\n\n## Important Topics\n\n* cardNumber must only contain numbers and 16 digits\n* cvv must only contain numbers and 3 digits\n* Buyer and Client must exist before the payment\n* Credit_card and its holder will be registered at the time of the payment processing.\n* If the credit_card already exists inside the DB, it will not be created and the payment will be denied."
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:9000/payment BOLETO",
+			"request": {
+				"url": "http://localhost:9000/payment",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"amount\": \"10000.00\",\n\t\"paymentMethod\":{\n\t\t\"method\": \"BOLETO\"\n\t},\n\t\"buyer\":{\n\t\t\"id\": \"1\"\n\t},\n\t\"client\":{\n\t\t\"id\": \"1\"\n\t}\n}"
+				},
+				"description": "## Adding a new Payment with BOLETO option:\n\n{\n\t\"amount\": \"100000\",\n\t\"paymentMethod\":{\n\t\t\"method\": \"BOLETO\"\n\t},\n\t\"buyer\":{\n\t\t\"id\": \"1\"\n\t},\n\t\"client\":{\n\t\t\"id\": \"1\"\n\t}\n}\n\n## Adding a new Payment with Credit Card option:\n\n{\n\t\"amount\": \"10000.00\",\n\t\"paymentMethod\":{\n\t\t\"method\": \"CREDIT_CARD\",\n\t\t\"creditCard\":{\n\t\t\t\"brand\": \"Master\",\n\t\t\t\"holder\":{\n\t\t\t\t\"name\": \"Bia\",\n\t\t\t\t\"birthDate\": \"28-10-1994\",\n\t\t\t\t\"documentNumber\": \"38129391293\"\n\t\t\t},\n\t\t\t\"cardNumber\": \"1111111111111212\",\n\t\t\t\"expirationDate\": \"30-04-2018\",\n\t\t\t\"cvv\": \"23\"\n\t\t}\n\t},\n\t\"buyer\":{\n\t\t\"id\": \"1\"\n\t},\n\t\"client\":{\n\t\t\"id\": \"1\"\n\t}\n}\n\n## Important Topics\n\n* cardNumber must only contain numbers and 16 digits\n* cvv must only contain numbers and 3 digits\n* Buyer and Client must exist before the payment\n* Credit_card and its holder will be registered at the time of the payment processing.\n* If the credit_card already exists inside the DB, it will not be created and the payment will be denied."
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:9000/payment/1",
+			"request": {
+				"url": "http://localhost:9000/payment/1",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {},
+				"description": "## To search a payment by its id:\n\n"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:9000/payment",
+			"request": {
+				"url": "http://localhost:9000/payment",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {},
+				"description": "## To search a list of all payments"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:9000/buyer",
+			"request": {
+				"url": "http://localhost:9000/buyer",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {},
+				"description": "## To search for all buyers inside DB"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:9000/buyer/1",
+			"request": {
+				"url": "http://localhost:9000/buyer/1",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {},
+				"description": "## To search a buyer by its ID inside DB"
+			},
+			"response": []
+		}
+	]
+}
