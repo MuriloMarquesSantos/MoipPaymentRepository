@@ -1,0 +1,4 @@
+create table Client(
+id INTEGER AUTO_INCREMENT NOT NULL,
+primary key(id)
+);
